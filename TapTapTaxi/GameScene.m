@@ -13,6 +13,7 @@ static float ROAD_START_Y = 0;
 static float ROAD_START_X = 0;
 static float TILE_WIDTH = 68;
 static float ANGLE = 26.55;
+static float SCREEN_WIDTH = 0;
 
 @interface GameScene()
 
@@ -28,10 +29,29 @@ static float ANGLE = 26.55;
   
   ROAD_START_Y = [[UIScreen mainScreen] bounds].size.height / 2 + 100;
   ROAD_START_X = [[UIScreen mainScreen] bounds].size.width + 100;
+  SCREEN_WIDTH = [[UIScreen mainScreen] bounds].size.width;
   
   _timer = 0;
   _generatorNumber = 0;
   _arrTiles = [NSMutableArray new];
+  
+  [self generate];
+  
+}
+
+- (void)generate{
+  
+  int i = 0;
+  int numberOfTiles = ceil(SCREEN_WIDTH / TILE_WIDTH) + 2;
+  while (i <= numberOfTiles) {
+    [self generateRoad];
+    
+    if(i != numberOfTiles){
+      [self moveTilesWithSpeed:TILE_WIDTH];
+    }
+    
+    i++;
+  }
   
 }
 
